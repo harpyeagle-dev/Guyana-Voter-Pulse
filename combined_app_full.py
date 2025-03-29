@@ -16,39 +16,33 @@ if "step" not in st.session_state:
 if "code" not in st.session_state:
     st.session_state.code = ""
 
-st.title("🗳️ Guyana Voter Pulse")
-
 # --- Step 1: Request Access Code ---
-if st.session_state.step == 1:
-    st.subheader("Step 1: Request Access Code")
-    email = st.text_input("Enter your email address to receive a one-time voting code:")
+st.title("🗳️ Guyana Voter Pulse")
+import smtplib
+from email.mime.text import MIMEText
 
-    if st.button("Request Code"):
-        if "@" not in email or "." not in email:
-            st.error("Please enter a valid email address.")
-        else:
-            try:
-                codes_df = pd.read_csv("valid_codes.csv")
-                available = codes_df[codes_df["used"] == False]
+def send_code_email(to_email, code):
+    st.info(f"📤 Sending code to {to_email}")
+    sender = st.secrets["EMAIL"]["address"]
+    password = st.secrets["EMAIL"]["password"]
 
-                if not available.empty:
-                    selected_code = available.iloc[0]["code"]
-                    codes_df.loc[codes_df["code"] == selected_code, "used"] = True
-                    codes_df.to_csv("valid_codes.csv", index=False)
+    body = f"Your one-time voting code is: {code}"
+    msg = MIMEText(body)
+    msg["Subject"] = "Your Guyana Voter Pulse Access Code"
+    msg["From"] = sender
+    msg["To"] = to_email
 
-                    success = send_code_email(email, selected_code)
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender, password)
+        server.send_message(msg)
+        server.quit()
+        return True
+    except Exception as e:
+        st.error(f"❌ Email failed: {e}")
+        return False
 
-                    if success:
-                        st.success("✅ Code sent to your email.")
-                        st.session_state.code = selected_code
-                        st.session_state.step = 2
-                        st.rerun()
-                    else:
-                        st.error("❌ Email failed to send.")
-                else:
-                    st.error("⚠️ No codes available.")
-            except Exception as e:
-                st.error(f"Error loading codes: {e}")
 
 # --- Step 2: Verify Code ---
 elif st.session_state.step == 2:
