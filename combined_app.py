@@ -7,6 +7,9 @@ import string
 import os
 import save_to_sheets
 
+st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
+
+# Rest of your code
 # App setup
 st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
 st.title("🇬🇾 Guyana Voter Pulse")
