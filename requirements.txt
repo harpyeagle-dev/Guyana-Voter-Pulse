@@ -3,3 +3,4 @@ pandas
 plotly
 gspread
 st-files-connection
+google.oauth
