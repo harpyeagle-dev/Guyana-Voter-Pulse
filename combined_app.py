@@ -84,28 +84,26 @@ elif st.session_state.step == 3:
         submit_vote = st.form_submit_button("Submit Vote")
 
     if submit_vote:
-        st.warning("🧪 Reached vote submission block")
+    st.info("🧠 Submit button clicked — preparing to save vote")
 
-        if len(issues) > 3:
-            st.error("⚠️ Please select no more than 3 issues.")
-        else:
-            vote_data = {
-                "Timestamp": datetime.datetime.now(),
-                "Code": st.session_state.code,
-                "Region": region,
-                "Party": party,
-                "Preferred Candidate": candidate,
-                "Candidate Reason": reason,
-                "Age": age,
-                "Gender": gender,
-                "Diaspora": diaspora,
-                "Top Issues": ", ".join(issues),
-                "Fairness": fair,
-                "GECOM Trust": gecom
-            }
+    vote_data = {
+        "Timestamp": datetime.datetime.now(),
+        "Code": st.session_state.code,
+        "Region": region,
+        "Party": party,
+        "Preferred Candidate": candidate,
+        "Candidate Reason": reason,
+        "Age": age,
+        "Gender": gender,
+        "Diaspora": diaspora,
+        "Top Issues": ", ".join(issues),
+        "Fairness": fair,
+        "GECOM Trust": gecom
+    }
+
+    save_vote_to_sheets(vote_data)
 
             st.warning("🧠 Calling save_vote_to_sheets() now...")
-            save_vote_to_sheets(vote_data)
             st.success("🎯 Vote data passed to Google Sheets function.")
 
             df = pd.read_csv(CODES_FILE)
