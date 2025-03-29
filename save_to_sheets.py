@@ -1,32 +1,43 @@
-
 import streamlit as st
+from st_files_connection import FilesConnection
+import pandas as pd
 import gspread
 from google.oauth2 import service_account
 
-def save_vote_to_sheets(vote_data):
-    st.info("📡 Connecting to Google Sheets...")
+# Create a connection object using the secrets in your .streamlit/secrets.toml file
+conn = st.connection("gsheets", type=FilesConnection)
 
-    try:
-        # Load credentials from Streamlit secrets
-        credentials = service_account.Credentials.from_service_account_info(
-            st.secrets["connections"]["gsheets"],
-            scopes=[
-                "https://www.googleapis.com/auth/spreadsheets",
-                "https://www.googleapis.com/auth/drive"
-            ],
-        )
+# Function to append data to Google Sheets
+def append_to_sheet(data_to_append):
+    # Create a connection object using credentials from secrets
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["connections"]["gsheets"],
+        scopes=[
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive",
+        ],
+    )
+    
+    # Create a gspread client
+    client = gspread.authorize(credentials)
+    
+    # Open the spreadsheet (replace with your spreadsheet name)
+    spreadsheet = client.open("Your Spreadsheet Name")
+    
+    # Select a worksheet (replace with your worksheet name or index)
+    worksheet = spreadsheet.worksheet("Sheet1")
+    
+    # Append the data
+    worksheet.append_rows(data_to_append)
+    
+    return True
 
-        client = gspread.authorize(credentials)
-
-        # Open spreadsheet and select sheet
-        spreadsheet = client.open("fresh_votes_template")  # Name of your Google Sheet
-        worksheet = spreadsheet.worksheet("Sheet1")        # Change if your tab has a different name
-
-        row = list(vote_data.values())
-        worksheet.append_row(row)
-
-        st.success("✅ Vote successfully saved to Google Sheets!")
-
-    except Exception as e:
-        st.error("❌ Failed to save vote to Google Sheets.")
-        st.exception(e)
+# Example usage
+if st.button("Add Data"):
+    # Example data to append (list of lists, each inner list is a row)
+    new_data = [["John Doe", 30, "New York"], ["Jane Smith", 25, "Los Angeles"]]
+    
+    if append_to_sheet(new_data):
+        st.success("Data successfully appended to Google Sheet!")
+    else:
+        st.error("Failed to append data.")
