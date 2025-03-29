@@ -7,7 +7,7 @@ import datetime
 import os
 import smtplib
 from email.mime.text import MIMEText
-from save_to_sheets import save_vote_to_sheets
+import save_to_sheets
 
 # --- Email sending logic ---
 def send_code_email(to_email, code):
