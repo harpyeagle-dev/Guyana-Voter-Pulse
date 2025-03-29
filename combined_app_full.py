@@ -5,7 +5,7 @@ st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
 import pandas as pd
 import datetime
 import os
-from save_to_sheets import save_vote_to_sheets
+import save_to_sheets
 
 VOTES_FILE = "votes.csv"
 CODES_FILE = "valid_codes.csv"
@@ -78,7 +78,7 @@ elif st.session_state.step == 3:
                 "Fairness": fair,
                 "GECOM Trust": gecom
             }
-            save_vote_to_sheets(vote_data)
+            save_to_sheets(vote_data)
             st.session_state.step = 4
             st.rerun()
 
