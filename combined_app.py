@@ -1,13 +1,13 @@
 
 import streamlit as st
+st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
+
 import pandas as pd
 import datetime
 import random
 import string
 import os
 import save_to_sheets
-
-st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
 
 # Rest of your code
 # App setup
