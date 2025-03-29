@@ -85,7 +85,7 @@ elif st.session_state.step == 3:
 
     if submit_vote:
         st.info("🧠 Submit button clicked — preparing to save vote")
-        save_vote_to_sheets(vote_data)
+         save_vote_to_sheets(vote_data)
 
     vote_data = {
         "Timestamp": datetime.datetime.now(),
