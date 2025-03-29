@@ -1,5 +1,0 @@
-streamlit
-gspread
-pandas
-google-auth
-st_files_connection
