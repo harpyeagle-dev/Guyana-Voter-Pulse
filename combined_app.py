@@ -85,6 +85,7 @@ elif st.session_state.step == 3:
 
     if submit_vote:
     st.info("🧠 Submit button clicked — preparing to save vote")
+     save_vote_to_sheets(vote_data)
 
     vote_data = {
         "Timestamp": datetime.datetime.now(),
@@ -100,8 +101,6 @@ elif st.session_state.step == 3:
         "Fairness": fair,
         "GECOM Trust": gecom
     }
-
-    save_vote_to_sheets(vote_data)
 
             st.warning("🧠 Calling save_vote_to_sheets() now...")
             st.success("🎯 Vote data passed to Google Sheets function.")
