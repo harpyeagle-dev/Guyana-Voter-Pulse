@@ -5,7 +5,7 @@ import datetime
 import random
 import string
 import os
-from utils.save_to_sheets import save_vote_to_sheets
+from save_to_sheets import save_vote_to_sheets
 
 # App setup
 st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
