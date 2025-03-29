@@ -33,15 +33,24 @@ if st.session_state.step == 1:
 
 # --- Step 2: Verify Code ---
 elif st.session_state.step == 2:
-    st.subheader("Step 2: Verify Code")
-    code_input = st.text_input("Enter the access code sent to your email:")
+    st.subheader("Step 2: Verify Access Code")
+    code_input = st.text_input("Enter your access code:")
     if st.button("Verify Code"):
-        if code_input == st.session_state.code:
-            st.success("✅ Code verified.")
-            st.session_state.step = 3
-            st.rerun()
+        if os.path.exists("valid_codes.csv"):
+            codes_df = pd.read_csv("valid_codes.csv")
+            match = codes_df[codes_df["code"] == code_input]
+
+            if not match.empty and not match.iloc[0]["used"]:
+                st.success("✅ Code verified.")
+                st.session_state.code = code_input
+                st.session_state.step = 3
+                st.rerun()
+            elif not match.empty and match.iloc[0]["used"]:
+                st.error("⚠️ This code has already been used.")
+            else:
+                st.error("❌ Invalid code.")
         else:
-            st.error("Invalid code.")
+            st.error("Codes file missing.")
 
 # --- Step 3: Cast Vote ---
 elif st.session_state.step == 3:
