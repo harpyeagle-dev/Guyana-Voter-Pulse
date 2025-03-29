@@ -4,7 +4,7 @@ st.set_page_config(page_title="🗳️ Guyana Voter Pulse", layout="centered")
 
 import pandas as pd
 import datetime
-from save_to_sheets import save_vote_to_sheets
+import save_to_sheets
 
 # Example voting interface
 st.title("Guyana Voter Pulse")
