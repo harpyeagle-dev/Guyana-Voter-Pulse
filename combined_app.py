@@ -102,8 +102,8 @@ elif st.session_state.step == 3:
         "GECOM Trust": gecom
     }
 
-        st.warning("🧠 Calling save_vote_to_sheets() now...")
-        st.success("🎯 Vote data passed to Google Sheets function.")
+    st.warning("🧠 Calling save_vote_to_sheets() now...")
+    st.success("🎯 Vote data passed to Google Sheets function.")
 
         df = pd.read_csv(CODES_FILE)
         df.loc[df["code"] == st.session_state.code, "used"] = True
