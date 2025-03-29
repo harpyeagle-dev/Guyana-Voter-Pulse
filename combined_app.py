@@ -41,4 +41,4 @@ if submit_vote:
             "Fairness": fair,
             "GECOM Trust": gecom
         }
-        save_to_sheets(vote_data)
+        save_to_sheets.save_vote_to_sheets(vote_data)
