@@ -102,15 +102,15 @@ elif st.session_state.step == 3:
         "GECOM Trust": gecom
     }
 
-            st.warning("🧠 Calling save_vote_to_sheets() now...")
-            st.success("🎯 Vote data passed to Google Sheets function.")
+        st.warning("🧠 Calling save_vote_to_sheets() now...")
+        st.success("🎯 Vote data passed to Google Sheets function.")
 
-            df = pd.read_csv(CODES_FILE)
-            df.loc[df["code"] == st.session_state.code, "used"] = True
-            df.to_csv(CODES_FILE, index=False)
+        df = pd.read_csv(CODES_FILE)
+        df.loc[df["code"] == st.session_state.code, "used"] = True
+        df.to_csv(CODES_FILE, index=False)
 
-            st.session_state.step = 4
-            st.rerun()
+        st.session_state.step = 4
+        st.rerun()
 
 # Step 4: Done
 elif st.session_state.step == 4:
