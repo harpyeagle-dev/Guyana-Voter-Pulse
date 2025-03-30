@@ -7,7 +7,6 @@ import datetime
 import os
 import smtplib
 from email.mime.text import MIMEText
-from streamlit_secrets import load_secrets
 import save_to_sheets
 
 # --- Email sending logic ---
