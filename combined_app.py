@@ -125,7 +125,7 @@ elif st.session_state.step == 3:
                 "Fairness": fair,
                 "GECOM Trust": gecom
             }
-            save_vote_to_sheets(vote_data)
+            save_to_sheets(vote_data)
             st.session_state.step = 4
             st.rerun()
 
