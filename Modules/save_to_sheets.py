@@ -10,5 +10,5 @@ def save_vote_to_sheets(vote_data):
     )
     client = gspread.authorize(credentials)
 
-    sheet = client.open("Your Google Sheet Name").sheet1
+    sheet = client.open("fresh_votes_template").sheet1
     sheet.append_row([vote_data['choice'], vote_data['timestamp']])
