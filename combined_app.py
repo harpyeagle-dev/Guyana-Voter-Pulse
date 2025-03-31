@@ -7,7 +7,7 @@ import datetime
 import os
 import smtplib
 from email.mime.text import MIMEText
-from Modules.save_to_sheets import save_votes_to_sheets
+from Modules.save_to_sheets import save_vote_to_sheets
 
 # --- Email sending logic ---
 def send_code_email(to_email, code):
@@ -125,7 +125,7 @@ elif st.session_state.step == 3:
                 "Fairness": fair,
                 "GECOM Trust": gecom
             }
-            save_votes_to_sheets(vote_data)
+            save_vote_to_sheets(vote_data)
             st.session_state.step = 4
             st.rerun()
 
